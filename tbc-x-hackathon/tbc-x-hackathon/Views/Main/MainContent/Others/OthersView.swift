@@ -9,13 +9,14 @@ import SwiftUI
 
 struct OthersView: View {
     var logoutAction: () -> Void
-    @State private var showClaim: Bool = true
+    @State private var showClaim: Bool = false
+    @State var selectedItem: MarketItem? = MarketItem(imageName: "nft4", title: "TEGETA Sale 5%")
     
     let items = [
-        MarketItem(imageName: "marketplaceIcon", title: "TEGETA Sale 5%"),
-        MarketItem(imageName: "learnIcon", title: "Biblusi Sale 15%"),
-        MarketItem(imageName: "othersIcon", title: "MyHome VIP 2mth"),
-        MarketItem(imageName: "simulateIcon", title: "TEGETA Sale 15%")
+        MarketItem(imageName: "othersIcon", title: "Biblusi Sale 15%"),
+        MarketItem(imageName: "nft1", title: "Free Popcorn Cavea"),
+        MarketItem(imageName: "nft3", title: "TEGETA Sale 5%"),
+        MarketItem(imageName: "nft4", title: "TEGETA Sale 5%")
     ]
     
     var body: some View {
@@ -34,7 +35,33 @@ struct OthersView: View {
                 myCollectionView()
             }
             .sheet(isPresented: $showClaim) {
-                claimView()
+                VStack {
+                    Image(selectedItem?.imageName ?? "")
+                        .resizable()
+                        .frame(width: 100, height: 100)
+                        .scaledToFill()
+                        .padding(.top, 40)
+                    
+                    Text(selectedItem?.title ?? "")
+                        .font(.custom("VarelaRound-Regular", size: 22))
+                    
+                    Button(action: {
+                        if let url = URL(string: "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley") {
+                            UIApplication.shared.open(url, options: [:], completionHandler: nil)
+                        }
+                    }) {
+                        Text("Claim Your Reward")
+                            .font(.custom("VarelaRound-Regular", size: 18))
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: 200)
+                            .padding()
+                            .background(Color.blue)
+                            .cornerRadius(12)
+                    }
+                    Spacer()
+                }
+                .shadow(radius: 10)
                     .presentationDetents([.fraction(0.4)])
             }
             .padding(.top, 8)
@@ -65,7 +92,7 @@ struct OthersView: View {
                 .frame(width: 80)
             }
             .padding()
-
+            
             VStack {
                 Spacer()
                 Image("userplaceholderImage")
@@ -91,19 +118,20 @@ struct OthersView: View {
     }
     
     private func myCollectionView() -> some View {
+        
         VStack(alignment: .leading, spacing: 8) {
             Text("My Collection")
                 .font(.custom("VarelaRound-Regular", size: 26))
                 .fontWeight(.semibold)
             
-            LazyVStack {
-                ForEach(0..<items.count / 3) { row in
-                    HStack {
-                        ForEach(0..<3) { column in
-                            let index = row * 3 + column
-                            MarketItemView(item: items[index])
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: 16) {
+                ForEach(items, id: \.hashValue) { item in
+                    MarketItemView(item: item, showPrice: false, buttonClicked: {
+                        selectedItem = item
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                            showClaim = true
                         }
-                    }
+                    })
                 }
             }
         }
@@ -150,35 +178,7 @@ struct OthersView: View {
                 .fontWeight(.semibold)
                 .onTapGesture {
                     showClaim = true
-                    }
+                }
         }
-    }
-    
-    private func claimView() -> some View {
-        VStack {
-            Image("othersIcon")
-                .resizable()
-                .frame(width: 100, height: 100)
-                .scaledToFill()
-                .padding(.top, 40)
-            
-            Text("Biblusi Sale 15%")
-                .font(.custom("VarelaRound-Regular", size: 22))
-            
-            Button(action: {
-
-            }) {
-                Text("Claim Your Reward")
-                    .font(.custom("VarelaRound-Regular", size: 18))
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                    .frame(maxWidth: 200)
-                    .padding()
-                    .background(Color.blue)
-                    .cornerRadius(12)
-            }
-            Spacer()
-        }
-        .shadow(radius: 10)
     }
 }

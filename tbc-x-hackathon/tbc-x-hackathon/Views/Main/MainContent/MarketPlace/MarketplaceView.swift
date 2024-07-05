@@ -7,44 +7,73 @@
 
 import SwiftUI
 
-struct MarketplaceView: View {
-    let items = [
-        MarketItem(imageName: "marketplaceIcon", title: "TEGETA Sale 5%"),
-        MarketItem(imageName: "learnIcon", title: "Biblusi Book"),
-        MarketItem(imageName: "othersIcon", title: "MyAuto VIP 1mth"),
-        MarketItem(imageName: "simulateIcon", title: "MyHome VIP 1mth"),
-        MarketItem(imageName: "marketplaceIcon", title: "TEGETA Sale 5%"),
-        MarketItem(imageName: "learnIcon", title: "MyHome VIP 2mth"),
-        MarketItem(imageName: "othersIcon", title: "TEGETA Sale 25%"),
-        MarketItem(imageName: "simulateIcon", title: "Biblusi 2 Book"),
-        MarketItem(imageName: "marketplaceIcon", title: "TEGETA Sale 5%"),
-        MarketItem(imageName: "learnIcon", title: "Biblusi Book"),
-        MarketItem(imageName: "othersIcon", title: "MyHome VIP 2mth"),
-        MarketItem(imageName: "simulateIcon", title: "TEGETA Sale 15%")
-    ]
+struct MarketplaceView: View {    
+    @ObservedObject var viewModel: MainContentViewModel
+    @State var showBuy = false
+    @State var selectedItem: MarketItem = MarketItem(imageName: "othersIcon", title: "Biblusi Sale 15%")
     
     var body: some View {
         VStack {
-            
+            HStack {
+                Spacer()
+                Text(String(describing: viewModel.getCurrentMoney()))
+                    .font(.custom("VarelaRound-Regular", size: 22))
+                    .foregroundStyle(.customLightBlue)
+                Image("coinIcon")
+
+            }
+
             ScrollView {
-                LazyVStack {
-                    ForEach(0..<items.count / 3, id: \.self) { row in
-                        HStack(alignment: .top) {
-                            ForEach(0..<3, id: \.self) { column in
-                                if let item = itemAt(row: row, column: column) {
-                                    MarketItemView(item: item)
-                                }
-                            }
-                        }
+                LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: 16) {
+                    ForEach(viewModel.getMarketPlaceItems(), id: \.hashValue) { item in
+                        MarketItemView(item: item, showPrice: true, buttonClicked: {
+                            selectedItem = item
+                            showBuy = true
+                        })
                     }
                 }
                 .padding()
             }
+            
+            .sheet(isPresented: $showBuy) {
+                VStack {
+                    Image(selectedItem.imageName)
+                        .resizable()
+                        .frame(width: 100, height: 100)
+                        .scaledToFill()
+                        .padding(.top, 40)
+                    
+                    Text(selectedItem.title)
+                        .font(.custom("VarelaRound-Regular", size: 22))
+                    
+                    HStack {
+                        Image("coinIcon")
+
+                        Text("10")
+                            .font(.custom("VarelaRound-Regular", size: 16))
+                            .foregroundColor(.primary)
+                    }
+                    
+                    Button(action: {
+                        if viewModel.purchaseItem(itemPrice: 10) {
+                            showBuy = false
+                        }
+                    }) {
+                        Text("Buy")
+                            .font(.custom("VarelaRound-Regular", size: 18))
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .frame(maxWidth: 200)
+                            .padding()
+                            .background(Color.blue)
+                            .cornerRadius(12)
+                    }
+                    Spacer()
+                }
+                .shadow(radius: 10)
+                    .presentationDetents([.fraction(0.4)])
+            }
+            .padding(.top, 8)
         }
-    }
-    
-    private func itemAt(row: Int, column: Int) -> MarketItem? {
-        let index = row * 3 + column
-        return index < items.count ? items[index] : nil
     }
 }

@@ -30,6 +30,3 @@ struct SimulateCard: View {
         .shadow(radius: 5)
     }
 }
-#Preview {
-    SimulateCard(image: "placeholder1", name: "placeholder")
-}

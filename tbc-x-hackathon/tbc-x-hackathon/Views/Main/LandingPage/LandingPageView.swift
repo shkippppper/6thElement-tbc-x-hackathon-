@@ -14,7 +14,6 @@ struct LandingPageView: View {
         ZStack {
             if viewModel.isUserAuthorized {
                 NavigationStack {
-                    
                     MainContentView(viewModel: MainContentViewModel(), authViewModel: viewModel)
                         .transition(.opacity)
                 }
@@ -39,8 +38,45 @@ struct LandingPageView: View {
                 .animation(.easeInOut(duration: 0.5), value: viewModel.showLandingPage)
                 .animation(.easeInOut(duration: 0.5), value: viewModel.showLoginPage)
             }
+            ErrorBanner(message: viewModel.errorMessage ?? "Unknown error", show: $viewModel.showAlert)
+                
         }
         .background(Color.white)
         .edgesIgnoringSafeArea(.all)
+    }
+}
+
+import SwiftUI
+
+struct ErrorBanner: View {
+    var message: String
+    @Binding var show: Bool
+
+    var body: some View {
+        VStack {
+            Spacer()
+            if show {
+                HStack {
+                    Text(message)
+                        .foregroundColor(.white)
+                        .padding()
+                    Spacer()
+                    Button(action: {
+                        withAnimation {
+                            show = false
+                        }
+                    }) {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundColor(.white)
+                            .padding()
+                    }
+                }
+                .background(Color.red)
+                .cornerRadius(10)
+                .padding()
+                .transition(.move(edge: .bottom))
+                .animation(.easeInOut, value: show)
+            }
+        }
     }
 }

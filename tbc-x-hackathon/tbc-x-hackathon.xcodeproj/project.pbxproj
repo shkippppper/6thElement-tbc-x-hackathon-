@@ -47,6 +47,7 @@
 		BADF00802C386C9C00371716 /* CongratulationsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADF007F2C386C9C00371716 /* CongratulationsView.swift */; };
 		BADF00822C386CB400371716 /* AnswerButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADF00812C386CB400371716 /* AnswerButton.swift */; };
 		BADF00842C38733E00371716 /* LevelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADF00832C38733E00371716 /* LevelData.swift */; };
+		BAF7CD5F2C38BD49001D8A3D /* MarketItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAF7CD5E2C38BD49001D8A3D /* MarketItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -92,6 +93,7 @@
 		BADF007F2C386C9C00371716 /* CongratulationsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CongratulationsView.swift; sourceTree = "<group>"; };
 		BADF00812C386CB400371716 /* AnswerButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerButton.swift; sourceTree = "<group>"; };
 		BADF00832C38733E00371716 /* LevelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LevelData.swift; sourceTree = "<group>"; };
+		BAF7CD5E2C38BD49001D8A3D /* MarketItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketItem.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -301,6 +303,7 @@
 				BADF007B2C38539D00371716 /* Simulate.swift */,
 				BADF007D2C3858C500371716 /* LearnItem.swift */,
 				BADF00832C38733E00371716 /* LevelData.swift */,
+				BAF7CD5E2C38BD49001D8A3D /* MarketItem.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -408,6 +411,7 @@
 				BADF007C2C38539D00371716 /* Simulate.swift in Sources */,
 				BADF00382C364B5500371716 /* MainContentViewModel.swift in Sources */,
 				BADF00232C349C2900371716 /* LoginView.swift in Sources */,
+				BAF7CD5F2C38BD49001D8A3D /* MarketItem.swift in Sources */,
 				BADF00642C37540D00371716 /* ProgressBar.swift in Sources */,
 				BADF003E2C364E3F00371716 /* SplashScreenView.swift in Sources */,
 				BADF007A2C38520B00371716 /* SimulateCard.swift in Sources */,

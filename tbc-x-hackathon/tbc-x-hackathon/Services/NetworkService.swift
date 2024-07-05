@@ -12,6 +12,7 @@ class NetworkService {
     private init() {}
     
     let baseUrl = "http://178.134.88.6:5141"
+        //   "http://178.134.88.6:8000" reserve
     
     func performRequest(
         urlPath: String,
@@ -92,7 +93,6 @@ class NetworkService {
     }
     
     func checkAnswer(answerId: Int, completion: @escaping (Bool?, Error?) -> Void) {
-        print(answerId)
         performRequest(urlPath: "/Answer/checkAnswer/\(answerId)", method: "GET") { data, response, error in
             guard let data = data, error == nil else {
                 completion(nil, error)
@@ -101,7 +101,6 @@ class NetworkService {
             
             do {
                 let result = try JSONDecoder().decode(Bool.self, from: data)
-                print(result)
                 completion(result, nil)
             } catch {
                 completion(nil, error)

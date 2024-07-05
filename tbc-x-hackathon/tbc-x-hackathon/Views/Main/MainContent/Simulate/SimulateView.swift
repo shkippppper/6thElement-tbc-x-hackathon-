@@ -24,7 +24,3 @@ struct SimulateView: View {
         }
     }
 }
-
-#Preview {
-    SimulateView(viewModel: MainContentViewModel())
-}

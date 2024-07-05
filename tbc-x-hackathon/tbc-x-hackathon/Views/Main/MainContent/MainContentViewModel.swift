@@ -16,13 +16,28 @@ final class MainContentViewModel: ObservableObject {
     @Published var isCorrect: Bool = false
     
     private let tokenKey = "some.keys.token"
-    @Published var money: Int = 0
+    @Published var money: Int = 100
     
     var simulations = [
         Simulate(image: "placeholder1", name: "A day in the bank"),
         Simulate(image: "placeholder2", name: "Create an eWallet"),
         Simulate(image: "placeholder3", name: "A day at the store"),
         Simulate(image: "placeholder1", name: "Fund a company")
+    ]
+    
+    let marketPlaceItems = [
+        MarketItem(imageName: "nft1", title: "TEGETA Sale 5%"),
+        MarketItem(imageName: "othersIcon", title: "Biblusi Sale 15%"),
+        MarketItem(imageName: "nft2", title: "MyAuto VIP 1mth"),
+        MarketItem(imageName: "nft3", title: "MyHome VIP 1mth"),
+        MarketItem(imageName: "nft4", title: "TEGETA Sale 5%"),
+        MarketItem(imageName: "nft5", title: "MyHome VIP 2mth"),
+        MarketItem(imageName: "nft6", title: "TEGETA Sale 25%"),
+        MarketItem(imageName: "nft5", title: "Biblusi 2 Book"),
+        MarketItem(imageName: "nft2", title: "TEGETA Sale 5%"),
+        MarketItem(imageName: "nft6", title: "Biblusi Book"),
+        MarketItem(imageName: "nft4", title: "MyHome VIP 2mth"),
+        MarketItem(imageName: "nft1", title: "TEGETA Sale 15%")
     ]
     
     
@@ -55,7 +70,6 @@ final class MainContentViewModel: ObservableObject {
     }
     
     func fetchQuestions(for chapterId: Int) {
-        print(chapterId)
         NetworkService.shared.fetchQuestions(chapterId: chapterId) { [weak self] chapter, error in
             if let chapter = chapter {
                 DispatchQueue.main.async {
@@ -86,12 +100,16 @@ final class MainContentViewModel: ObservableObject {
     }
     
     func getSimulations() -> [Simulate] {
-        return simulations
+        simulations
     }
     
     
     func getFullImagePath(relativePath: String) -> String {
         "\(NetworkService.shared.baseUrl)\(relativePath)"
+    }
+    
+    func getMarketPlaceItems() -> [MarketItem] {
+        marketPlaceItems
     }
     
     func completeTask() {
@@ -100,4 +118,15 @@ final class MainContentViewModel: ObservableObject {
         // adittionally send completed chapter or module id to track them.
     }
     
+    func purchaseItem(itemPrice: Int) -> Bool {
+        if money > money - itemPrice {
+            money -= itemPrice
+            return true
+        }
+        return false
+    }
+    
+    func getCurrentMoney() -> Int {
+        money
+    }
 }

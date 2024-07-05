@@ -9,10 +9,12 @@ import SwiftUI
 
 struct MarketItemView: View {
     let item: MarketItem
+    var showPrice: Bool
+    var buttonClicked: () -> Void
     
     var body: some View {
         Button(action: {
-            
+            buttonClicked()
         }) {
             VStack {
                 Image(item.imageName)
@@ -24,18 +26,22 @@ struct MarketItemView: View {
                 
                 Text(item.title)
                     .font(.custom("VarelaRound-Regular", size: 16))
-                    .foregroundColor(.primary)
+                    .foregroundStyle(.customLightBlue)
+
+                Spacer()
+                if showPrice {
+                    HStack {
+                        Image("coinIcon")
+
+                        Text("10")
+                            .font(.custom("VarelaRound-Regular", size: 16))
+                            .foregroundColor(.primary)
+                    }
+                }
             }
             .frame(maxWidth: .infinity)
         }
     }
-}
-
-// take out later
-
-struct MarketItem {
-    let imageName: String
-    let title: String
 }
 
 

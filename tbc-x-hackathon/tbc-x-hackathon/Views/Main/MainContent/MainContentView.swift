@@ -22,7 +22,7 @@ struct MainContentView: View {
                     case 1:
                         SimulateView(viewModel: viewModel)
                     case 2:
-                        MarketplaceView()
+                        MarketplaceView(viewModel: viewModel)
                     case 3:
                         OthersView(logoutAction: {
                             authViewModel.logout()

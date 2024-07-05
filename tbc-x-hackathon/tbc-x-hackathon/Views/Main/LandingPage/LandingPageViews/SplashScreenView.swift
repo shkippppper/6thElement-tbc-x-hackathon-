@@ -12,7 +12,7 @@ struct SplashScreenView: View {
     
     var body: some View {
         ZStack {
-            Image("backgroundImage")
+            Image("backgroundImage1")
                 .resizable()
                 .scaledToFill()
                 .edgesIgnoringSafeArea(.all)
